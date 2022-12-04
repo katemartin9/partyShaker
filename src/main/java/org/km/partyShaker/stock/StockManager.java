@@ -13,6 +13,7 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 public class StockManager {
     List<Ingredient> stock;
@@ -80,5 +81,12 @@ public class StockManager {
             }
         }
         return availableCocktails;
+    }
+    public Optional<Cocktail> getCocktailByName(String name) {
+        List<Cocktail> availableCocktails;
+        try {
+            availableCocktails = this.listAvailableCocktails();
+        } catch (Exception e) {return Optional.empty();};
+    return availableCocktails.stream().filter(cocktail -> cocktail.name.equals(name)).findFirst();
     }
 }

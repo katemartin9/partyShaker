@@ -3,8 +3,8 @@
 <head>
     <title>Menu</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <link rel="stylesheet" href="../css/bootstrap.css"/>
-    <script src="../js/bootstrap.js"></script>
+    <link rel="stylesheet" href="/css/bootstrap.css"/>
+    <script src="/js/bootstrap.js"></script>
 </head>
 <body>
 <div class="container">
@@ -21,7 +21,10 @@
     </thead>
     <tbody>
     <tr th:each="cocktail : ${menu}">
-        <td th:text="${cocktail.name}"></td>
+            <td>
+            <a th:href="@{/menu/{cocktailName}(cocktailName=${cocktail.name})}"><span th:text="${cocktail.name}"/>
+            </a>
+            </td>
         <td th:text="${cocktail.description}"></td>
         <td>
             <span th:each="ingredient : ${cocktail.ingredients}">
