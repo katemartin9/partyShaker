@@ -35,5 +35,8 @@ public class Ingredient {
     public float getQuantity() {
         return quantity;
     }
+    public String getName() {
+        return this.name;
+    }
 }
 

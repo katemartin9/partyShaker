@@ -30,6 +30,9 @@ public class Cocktail {
     public String getName() {
         return this.name;
     }
+    public String getDescription() {
+        return this.description;
+    }
     public List<Ingredient> getIngredients() {return this.ingredients;}
     public void setRecipe(String recipe) {
         this.recipe = recipe;
