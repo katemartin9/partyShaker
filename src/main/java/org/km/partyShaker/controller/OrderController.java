@@ -16,4 +16,10 @@ public class OrderController {
 
         return "ordered";
     }
+
+    @RequestMapping(value="/order-queue", method= RequestMethod.GET)
+    public String showOrderQueue(Model model) {
+
+        return "order_queue";
+    }
 }
