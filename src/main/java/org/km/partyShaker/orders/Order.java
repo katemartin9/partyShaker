@@ -9,18 +9,18 @@ import software.amazon.awssdk.enhanced.dynamodb.mapper.annotations.DynamoDbSortK
 
 @DynamoDbBean
 public class Order {
-    String orderId;
+    int orderId;
     String guestName;
     String cocktail;
     int orderStatus;
 
     public Order() {}
-    public Order(Guest guest, String orderId, Cocktail cocktail) {
+    public Order(Guest guest, int orderId, Cocktail cocktail) {
         this.guestName = guest.name;
         this.orderId = orderId;
         this.cocktail = cocktail.getName();
     }
-    public Order(String guest, String orderId, String cocktail) {
+    public Order(String guest, int orderId, String cocktail) {
         this.guestName = guest;
         this.orderId = orderId;
         this.cocktail = cocktail;
@@ -28,19 +28,32 @@ public class Order {
     @DynamoDbPartitionKey
     @DynamoDbAttribute("guestName")
     public String getGuestName() {
-        return this.guestName + "#" + Constants.PARTY_ID;
+        return this.guestName;
     }
-    public void setGuestName(String guestName) {}
+    public void setGuestName(String guestName) {
+        this.guestName = guestName;
+    }
     @DynamoDbSortKey
     @DynamoDbAttribute("orderId")
-    public String getOrderId() {
+    public int getOrderId() {
         return this.orderId;
     }
-    public void setOrderId(String orderId) {}
-    public Integer getStatus() {
+    public void setOrderId(int orderId) {
+        this.orderId = orderId;
+    }
+    public String getCocktail() {
+        return this.cocktail;
+    }
+    public void setCocktail(String cocktail) {
+        this.cocktail = cocktail;
+    }
+    public int getStatus() {
         return orderStatus;
     }
-    public void setStatus(Integer status)  {
+    public void setStatus(int status)  {
         this.orderStatus = status;
+    }
+    public String toString() {
+        return "Order[name=" + this.guestName + " orderId=" + this.orderId + " cocktailName= " + this.cocktail + "]";
     }
 }

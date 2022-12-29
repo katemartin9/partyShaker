@@ -10,13 +10,13 @@ public class Guest {
     String name;
     public Guest() {};
     public Guest(String name) {
-        this.name = name;
+        this.name = name + "#" + Constants.PARTY_ID;
     }
 
     @DynamoDbPartitionKey
     @DynamoDbAttribute("guestName")
     public String getName() {
-        return name + "#" + Constants.PARTY_ID;
+        return name;
     }
     public void setName(String name)  {}
 
