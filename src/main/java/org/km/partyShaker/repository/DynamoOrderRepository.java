@@ -7,7 +7,7 @@ import software.amazon.awssdk.enhanced.dynamodb.TableSchema;
 
 @Repository
 public class DynamoOrderRepository implements OrderRepository {
-    private DynamoDbEnhancedClient client;
+    private final DynamoDbEnhancedClient client;
     private final String tableName;
 
     public DynamoOrderRepository(DynamoDbEnhancedClient client) {

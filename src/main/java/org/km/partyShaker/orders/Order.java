@@ -1,5 +1,6 @@
 package org.km.partyShaker.orders;
 
+import org.km.partyShaker.repository.Constants;
 import software.amazon.awssdk.enhanced.dynamodb.mapper.annotations.DynamoDbAttribute;
 import software.amazon.awssdk.enhanced.dynamodb.mapper.annotations.DynamoDbBean;
 import org.km.partyShaker.stock.Cocktail;
@@ -13,7 +14,7 @@ public class Order {
     String cocktail;
     int orderStatus;
 
-    public Order() {};
+    public Order() {}
     public Order(Guest guest, String orderId, Cocktail cocktail) {
         this.guestName = guest.name;
         this.orderId = orderId;
@@ -27,7 +28,7 @@ public class Order {
     @DynamoDbPartitionKey
     @DynamoDbAttribute("guestName")
     public String getGuestName() {
-        return this.guestName;
+        return this.guestName + "#" + Constants.PARTY_ID;
     }
     public void setGuestName(String guestName) {}
     @DynamoDbSortKey
