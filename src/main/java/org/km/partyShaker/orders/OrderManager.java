@@ -3,8 +3,13 @@ package org.km.partyShaker.orders;
 import com.google.gson.Gson;
 import com.google.gson.stream.JsonReader;
 import org.km.partyShaker.PartyShakerApplication;
+import org.km.partyShaker.repository.DynamoGuestRepository;
+import org.km.partyShaker.repository.DynamoOrderRepository;
 import org.km.partyShaker.stock.Cocktail;
 import org.km.partyShaker.stock.Ingredient;
+import software.amazon.awssdk.enhanced.dynamodb.DynamoDbEnhancedClient;
+import software.amazon.awssdk.enhanced.dynamodb.DynamoDbTable;
+import software.amazon.awssdk.services.dynamodb.DynamoDbClient;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -12,32 +17,31 @@ import java.io.FileReader;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.file.Paths;
-import java.util.ArrayDeque;
-import java.util.Deque;
-import java.util.Queue;
+import java.util.List;
+
+import static org.km.partyShaker.repository.Utilities.createDynamoDBClient;
 
 public class OrderManager {
-    Deque<Order> orderQueue;
+    DynamoOrderRepository repository;
 
     public OrderManager() {
-        this.orderQueue = new ArrayDeque<>();
+        DynamoDbEnhancedClient client = createDynamoDBClient();
+        this.repository = new DynamoOrderRepository(client);
     }
 
-    public void addToQueue(Order newOrder) {orderQueue.addLast(newOrder);
+    public void addToQueue(Order newOrder) {
+        repository.save(newOrder);
     }
     public void removeFromQueue(Order completedOrder) {
-        orderQueue.remove(completedOrder);
+        completedOrder.setStatus(1);
+        repository.save(completedOrder);
     }
-
     public boolean checkIfAlreadyInQueue(Guest guest) {
-        return true;
+        Order latestOrder = repository.latestOrderByGuestName(guest.getName());
+        return latestOrder.getStatus() == 0;
     }
 
-    public Order[] getOrderQueue() throws FileNotFoundException, URISyntaxException {
-        URL resource = PartyShakerApplication.class.getClassLoader().getResource("orders.json");
-        File file = Paths.get(resource.toURI()).toFile();
-        Gson gson = new Gson();
-        JsonReader reader = new JsonReader(new FileReader(file));
-        return gson.fromJson(reader, Order[].class);
+    public List<Order> getOrderQueue() {
+        return repository.allPendingOrders();
     }
 }

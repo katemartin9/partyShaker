@@ -1,11 +1,10 @@
 package org.km.partyShaker.orders;
 
 import org.km.partyShaker.repository.Constants;
-import software.amazon.awssdk.enhanced.dynamodb.mapper.annotations.DynamoDbAttribute;
-import software.amazon.awssdk.enhanced.dynamodb.mapper.annotations.DynamoDbBean;
+import software.amazon.awssdk.enhanced.dynamodb.mapper.annotations.*;
 import org.km.partyShaker.stock.Cocktail;
-import software.amazon.awssdk.enhanced.dynamodb.mapper.annotations.DynamoDbPartitionKey;
-import software.amazon.awssdk.enhanced.dynamodb.mapper.annotations.DynamoDbSortKey;
+
+import java.text.SimpleDateFormat;
 
 @DynamoDbBean
 public class Order {
@@ -13,17 +12,20 @@ public class Order {
     String guestName;
     String cocktail;
     int orderStatus;
+    String timestamp;
 
     public Order() {}
     public Order(Guest guest, int orderId, Cocktail cocktail) {
         this.guestName = guest.name;
         this.orderId = orderId;
         this.cocktail = cocktail.getName();
+        this.timestamp = new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss").format(new java.util.Date());
     }
     public Order(String guest, int orderId, String cocktail) {
         this.guestName = guest;
         this.orderId = orderId;
         this.cocktail = cocktail;
+        this.timestamp = new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss").format(new java.util.Date());
     }
     @DynamoDbPartitionKey
     @DynamoDbAttribute("guestName")
@@ -40,6 +42,15 @@ public class Order {
     }
     public void setOrderId(int orderId) {
         this.orderId = orderId;
+    }
+    @DynamoDbSecondaryPartitionKey(indexNames = {"statusParty-timestamp-index"})
+    @DynamoDbAttribute("statusParty")
+    public String getStatusParty() {return this.orderStatus + "#" + Constants.PARTY_ID;}
+    public void setStatusParty(String val){}
+    @DynamoDbSecondarySortKey(indexNames = {"statusParty-timestamp-index"})
+    @DynamoDbAttribute("timestamp")
+    public String getTimestamp(){return this.timestamp;}
+    public void setTimestamp(String val){
     }
     public String getCocktail() {
         return this.cocktail;

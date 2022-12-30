@@ -1,12 +1,13 @@
 package org.km.partyShaker.repository;
 import org.km.partyShaker.orders.Order;
 import org.springframework.stereotype.Repository;
-import software.amazon.awssdk.enhanced.dynamodb.DynamoDbEnhancedClient;
-import software.amazon.awssdk.enhanced.dynamodb.DynamoDbTable;
-import software.amazon.awssdk.enhanced.dynamodb.TableSchema;
+import software.amazon.awssdk.enhanced.dynamodb.*;
+import software.amazon.awssdk.enhanced.dynamodb.model.Page;
 import software.amazon.awssdk.enhanced.dynamodb.model.PageIterable;
 import software.amazon.awssdk.enhanced.dynamodb.model.QueryConditional;
 import software.amazon.awssdk.enhanced.dynamodb.model.QueryEnhancedRequest;
+import software.amazon.awssdk.services.dynamodb.model.AttributeValue;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,11 +21,9 @@ public class DynamoOrderRepository {
         this.tableName = "orders";
     }
     public void save(Order order) {
-
         DynamoDbTable<Order> orderDynamoDbTable = client.table(tableName, TableSchema.fromBean(Order.class));
         orderDynamoDbTable.putItem(order);
     }
-
     public Order latestOrderByGuestName(String guestName) {
         DynamoDbTable<Order> orderDynamoDbTable = client.table(tableName, TableSchema.fromBean(Order.class));
         PageIterable<Order> orders = orderDynamoDbTable.query(
@@ -39,6 +38,19 @@ public class DynamoOrderRepository {
         List<Order> orderItems = new ArrayList<>();
         orders.items().forEach(orderItems::add);
         return orderItems;
+    }
+    public List<Order> allPendingOrders() {
+        DynamoDbIndex<Order> orderDynamoDbIndex = client.table(tableName, TableSchema.fromBean(Order.class))
+                .index("statusParty-timestamp-index");
+        QueryConditional queryConditional = QueryConditional
+                .keyEqualTo(Key.builder().partitionValue("0#" + Constants.PARTY_ID)
+             .build());
+        Iterable<Page<Order>> orders = orderDynamoDbIndex.query(
+                QueryEnhancedRequest.builder().queryConditional(queryConditional).scanIndexForward(false).build()
+        );
+        List<Order> pendingOrders = new ArrayList<>();
+        orders.forEach(it -> pendingOrders.addAll(it.items()));
+        return pendingOrders;
     }
 
 }
