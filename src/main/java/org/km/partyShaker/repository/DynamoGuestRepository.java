@@ -5,7 +5,9 @@ import org.km.partyShaker.orders.Order;
 import org.springframework.stereotype.Repository;
 import software.amazon.awssdk.enhanced.dynamodb.DynamoDbEnhancedClient;
 import software.amazon.awssdk.enhanced.dynamodb.DynamoDbTable;
+import software.amazon.awssdk.enhanced.dynamodb.Key;
 import software.amazon.awssdk.enhanced.dynamodb.TableSchema;
+import software.amazon.awssdk.enhanced.dynamodb.model.GetItemEnhancedRequest;
 
 @Repository
 public class DynamoGuestRepository {
@@ -20,5 +22,11 @@ public class DynamoGuestRepository {
     public void save(Guest guest) {
         DynamoDbTable<Guest> guestDynamoDbTable = client.table(tableName, TableSchema.fromBean(Guest.class));
         guestDynamoDbTable.putItem(guest);
+    }
+    public boolean load(Guest guest) {
+        DynamoDbTable<Guest> guestDynamoDbTable = client.table(tableName, TableSchema.fromBean(Guest.class));
+        Key key = Key.builder().partitionValue(guest.getName()).build();
+        Guest loadedGuest = guestDynamoDbTable.getItem((GetItemEnhancedRequest.Builder requestBuilder) -> requestBuilder.key(key));
+        return loadedGuest != null;
     }
 }
