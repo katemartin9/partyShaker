@@ -6,13 +6,11 @@ import software.amazon.awssdk.enhanced.dynamodb.model.Page;
 import software.amazon.awssdk.enhanced.dynamodb.model.PageIterable;
 import software.amazon.awssdk.enhanced.dynamodb.model.QueryConditional;
 import software.amazon.awssdk.enhanced.dynamodb.model.QueryEnhancedRequest;
-import software.amazon.awssdk.services.dynamodb.model.AttributeValue;
-
 import java.util.ArrayList;
 import java.util.List;
 
 @Repository
-public class DynamoOrderRepository {
+public class DynamoOrderRepository implements OrderRepository {
     private final DynamoDbEnhancedClient client;
     private final String tableName;
 
