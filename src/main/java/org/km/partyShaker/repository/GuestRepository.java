@@ -7,5 +7,5 @@ public interface GuestRepository {
 
     public void save(Guest guest);
 
-    public Guest loadByName(String name);
+    public boolean load(Guest guest);
 }

@@ -25,7 +25,7 @@ public class Cocktail {
         return (getAlcoholContent()>cocktail.getAlcoholContent()) ? this.name : cocktail.name;
     }
     public String toString() {
-        return "Cocktail[name=" + this.name + "]";
+        return "Cocktail[name=" + this.name + " description= " + this.description + " " + this.ingredients + "]";
     }
     public String getName() {
         return this.name;
@@ -39,5 +39,11 @@ public class Cocktail {
     }
     public String getRecipe() {
         return recipe;
+    }
+    public boolean equals(Object obj) {
+        if (obj == null) return false;
+        if (!Cocktail.class.isAssignableFrom(obj.getClass())) return false;
+        Cocktail cocktail = (Cocktail)obj;
+        return cocktail.name.equals(this.name) && cocktail.description.equals(this.description);
     }
 }
