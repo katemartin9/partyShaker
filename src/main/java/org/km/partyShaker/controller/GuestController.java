@@ -1,5 +1,4 @@
 package org.km.partyShaker.controller;
-
 import org.km.partyShaker.orders.Guest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,7 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 public class GuestController {
     @GetMapping(value="/guest")
     public String guestForm(Model model) {
-        model.addAttribute("guest", new Guest());
+        model.addAttribute("guest", new Guest("km"));
         return "guest";
     }
 

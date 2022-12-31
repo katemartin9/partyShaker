@@ -1,7 +1,6 @@
 package org.km.partyShaker.stock;
-import software.amazon.awssdk.enhanced.dynamodb.mapper.annotations.DynamoDbAttribute;
-import software.amazon.awssdk.enhanced.dynamodb.mapper.annotations.DynamoDbBean;
-import software.amazon.awssdk.enhanced.dynamodb.mapper.annotations.DynamoDbPartitionKey;
+import org.km.partyShaker.repository.Constants;
+import software.amazon.awssdk.enhanced.dynamodb.mapper.annotations.*;
 
 import java.util.Objects;
 
@@ -41,7 +40,8 @@ public class Ingredient {
     public float getQuantity() {
         return quantity;
     }
-    @DynamoDbPartitionKey
+
+    @DynamoDbSortKey
     @DynamoDbAttribute("name")
     public String getName() {
         return this.name;
@@ -49,6 +49,18 @@ public class Ingredient {
     public void setName(String name) {
         this.name = name;
     }
+    @DynamoDbPartitionKey
+    @DynamoDbAttribute("nameParty")
+    public String getNameParty() {
+        return this.name + "#" + Constants.PARTY_ID;
+    }
+    public void setNameParty(String name) {}
+
+    @DynamoDbSecondaryPartitionKey(indexNames = {"party-name-index"})
+    @DynamoDbAttribute("party")
+    public String getParty() {return Constants.PARTY_ID;}
+    public void setParty(String val){}
+
     public void setQuantity(float quantity) {
         this.quantity = quantity;
     }

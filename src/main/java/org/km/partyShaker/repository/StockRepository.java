@@ -3,5 +3,6 @@ import org.km.partyShaker.stock.Ingredient;
 import java.util.List;
 
 public interface StockRepository {
-    public void save(List<Ingredient> ingredients);
+    public void saveMany(List<Ingredient> ingredients);
+    public void save(Ingredient ingredient);
 }
