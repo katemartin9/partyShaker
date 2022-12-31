@@ -5,4 +5,5 @@ import java.util.List;
 public interface StockRepository {
     public void saveMany(List<Ingredient> ingredients);
     public void save(Ingredient ingredient);
+    public List<Ingredient> getStock();
 }

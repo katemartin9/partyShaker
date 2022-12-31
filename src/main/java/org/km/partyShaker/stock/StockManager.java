@@ -1,21 +1,9 @@
 package org.km.partyShaker.stock;
-
-import com.google.gson.Gson;
-import com.google.gson.stream.JsonReader;
-import org.km.partyShaker.PartyShakerApplication;
 import org.km.partyShaker.repository.Constants;
 import org.km.partyShaker.repository.DynamoStockRepository;
 import org.km.partyShaker.repository.FileCocktailRepository;
 import software.amazon.awssdk.enhanced.dynamodb.DynamoDbEnhancedClient;
-
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.net.URISyntaxException;
-import java.net.URL;
-import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
