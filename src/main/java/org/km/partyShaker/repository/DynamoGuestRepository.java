@@ -1,13 +1,11 @@
 package org.km.partyShaker.repository;
 import org.km.partyShaker.orders.Guest;
-import org.springframework.stereotype.Repository;
 import software.amazon.awssdk.enhanced.dynamodb.DynamoDbEnhancedClient;
 import software.amazon.awssdk.enhanced.dynamodb.DynamoDbTable;
 import software.amazon.awssdk.enhanced.dynamodb.Key;
 import software.amazon.awssdk.enhanced.dynamodb.TableSchema;
 import software.amazon.awssdk.enhanced.dynamodb.model.GetItemEnhancedRequest;
 
-@Repository
 public class DynamoGuestRepository {
     private DynamoDbEnhancedClient client;
     private final String tableName;

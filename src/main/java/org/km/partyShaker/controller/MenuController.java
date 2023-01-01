@@ -11,7 +11,6 @@ import org.springframework.ui.Model;
 
 @Controller
 public class MenuController {
-    Guest guest = new Guest("km");
     StockManager stockManager = new StockManager();
     OrderManager orderManager = new OrderManager();
     public MenuController()  {
@@ -23,17 +22,21 @@ public class MenuController {
         return "menu";
     }
     @RequestMapping(value="/menu/{cocktailName}", method= RequestMethod.GET)
-    public String placeOrder(Model model, @PathVariable String cocktailName) {
-        model.addAttribute("menu", stockManager.listAvailableCocktails());
+    public String placeOrder(Model model, @PathVariable String cocktailName, @CookieValue(name = "guest") String guestName) {
         System.out.println(cocktailName);
         if (!cocktailName.isEmpty()) {
             Optional<Cocktail> cocktail = stockManager.getCocktailByName(cocktailName);
+            System.out.println(cocktail);
             if (!cocktail.isPresent()) {
                 return "menu";
             }
-            Order order = new Order(guest, 1, cocktail.get());
-            orderManager.addToQueue(order);
-            return "redirect:/ordered";
+            // TODO: add logic to remove a cocktail from the queue if ran out of stock
+            if (stockManager.checkIfCanMakeCocktail(cocktail.get())) {
+                Order order = new Order(guestName, 1, cocktail.get());
+                System.out.println(order);
+                orderManager.addToQueue(order);
+                return "redirect:/ordered";
+            }
         }
         return "menu";
     }

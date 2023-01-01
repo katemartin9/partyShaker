@@ -10,7 +10,6 @@ public class OrderController {
     OrderManager orderManager = new OrderManager();
     @RequestMapping(value="/ordered", method= RequestMethod.GET)
     public String showOrderPlaced(Model model) {
-
         return "ordered";
     }
 

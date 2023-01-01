@@ -1,13 +1,20 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="https://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <title>Greetings</title>
+    <link rel="stylesheet" href="/css/bootstrap.css"/>
+    <script src="/js/bootstrap.js"></script>
 </head>
 <body>
-<form method="post" th:action="@{/guest}" th:object="${guest}">
-    <p>Name: <input type="text" th:field="*{name}" /></p>
-    <p><input type="submit" value="Submit" /> <input type="reset" value="Reset" /></p>
+<form action="#" method="post" th:action="@{/guest}" th:object="${guest}" class="card p-3 bg-white">
+    <div class="form-group" style="width:50%">
+    <input type="text" th:field="*{name}" class="form-control" placeholder="Your name"/>
+        <div class="btn-toolbar mt-1">
+        <input type="submit"  class="btn btn-primary btn-sm" value="Submit" />
+        <input type="reset"  class="btn btn-primary btn-sm ml-2" value="Reset " />
+        </div>
+    </div>
 </form>
 </body>
 </html>

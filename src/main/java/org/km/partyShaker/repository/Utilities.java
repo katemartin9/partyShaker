@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.stream.JsonReader;
 import org.km.partyShaker.PartyShakerApplication;
 import org.km.partyShaker.stock.Cocktail;
+import org.km.partyShaker.stock.Ingredient;
 import software.amazon.awssdk.auth.credentials.ProfileCredentialsProvider;
 import software.amazon.awssdk.enhanced.dynamodb.DynamoDbEnhancedClient;
 import software.amazon.awssdk.regions.Region;
@@ -42,5 +43,18 @@ public class Utilities {
                 .dynamoDbClient(ddb)
                 .build();
         return enhancedClient;
+    }
+
+    public static List<Ingredient> loadManyFromJSONStock(String filename) {
+        try {
+            URL resource = PartyShakerApplication.class.getClassLoader().getResource(filename);
+            File file = Paths.get(resource.toURI()).toFile();
+            Gson gson = new Gson();
+            JsonReader reader = new JsonReader(new FileReader(file));
+            return Arrays.asList(gson.fromJson(reader, Ingredient[].class));
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return null;
+        }
     }
 }

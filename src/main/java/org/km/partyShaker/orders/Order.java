@@ -15,8 +15,8 @@ public class Order {
     String timestamp;
 
     public Order() {}
-    public Order(Guest guest, int orderId, Cocktail cocktail) {
-        this.guestName = guest.name;
+    public Order(String guest, int orderId, Cocktail cocktail) {
+        this.guestName = guest;
         this.orderId = orderId;
         this.cocktail = cocktail.getName();
         this.timestamp = new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss").format(new java.util.Date());
@@ -51,6 +51,7 @@ public class Order {
     @DynamoDbAttribute("timestamp")
     public String getTimestamp(){return this.timestamp;}
     public void setTimestamp(String val){
+        this.timestamp = val;
     }
     public String getCocktail() {
         return this.cocktail;

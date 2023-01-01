@@ -9,7 +9,6 @@ import software.amazon.awssdk.enhanced.dynamodb.model.QueryEnhancedRequest;
 import java.util.ArrayList;
 import java.util.List;
 
-@Repository
 public class DynamoOrderRepository implements OrderRepository {
     private final DynamoDbEnhancedClient client;
     private final String tableName;

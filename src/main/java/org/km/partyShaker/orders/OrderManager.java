@@ -13,15 +13,19 @@ public class OrderManager {
     }
 
     public void addToQueue(Order newOrder) {
-        repository.save(newOrder);
+        if(!checkIfAlreadyInQueue(newOrder.guestName)) {
+            repository.save(newOrder);
+        }
     }
     public void removeFromQueue(Order completedOrder) {
         completedOrder.setStatus(1);
         repository.save(completedOrder);
     }
-    public boolean checkIfAlreadyInQueue(Guest guest) {
-        Order latestOrder = repository.latestOrderByGuestName(guest.getName());
-        return latestOrder.getStatus() == 0;
+    public boolean checkIfAlreadyInQueue(String guestName) {
+        Order latestOrder = repository.latestOrderByGuestName(guestName);
+        if (latestOrder != null) {
+            return latestOrder.getStatus() == 0;
+        } return false;
     }
 
     public List<Order> getOrderQueue() {

@@ -1,10 +1,33 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<link rel="stylesheet" href="/css/bootstrap.css"/>
+<script src="/js/bootstrap.js"></script>
 <head>
     <meta charset="UTF-8">
     <title>Order Queue</title>
 </head>
 <body>
-<h1>Your guests are waiting.</h1>
+<div class="container">
+    <div class="page-header" id="banner">
+        <h1>Orders to complete</h1>
+        <table class="table table-hover">
+            <thead>
+            <tr>
+                <th>Guest</th>
+                <th>Cocktail</th>
+                <th>Timestamp</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="order : ${queue}">
+                <td th:text="${order.guestName}"></td>
+                <td th:text="${order.cocktail}"></td>
+                <td th:text="${order.timestamp}"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
 </body>
 </html>

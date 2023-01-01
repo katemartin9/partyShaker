@@ -18,7 +18,14 @@ public class Guest {
     public String getName() {
         return name;
     }
-    public void setName(String name)  {}
+    public void setName(String name)  {
+        if (name.contains("#")) {
+            this.name = name;
+        }
+        else {
+            this.name = name + "#" + Constants.PARTY_ID;
+        }
+    }
 
     public String toString() {
         return this.name;
