@@ -2,18 +2,22 @@
 <html lang="en" xmlns:th="https://www.thymeleaf.org">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <title>Greetings</title>
-    <link rel="stylesheet" href="/css/bootstrap.css"/>
-    <script src="/js/bootstrap.js"></script>
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <title>Welcome</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet" >
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js" ></script>
 </head>
 <body>
-<form action="#" method="post" th:action="@{/guest}" th:object="${guest}" class="card p-3 bg-white">
-    <div class="form-group" style="width:50%">
+<form action="#" method="post" th:action="@{/guest}" th:object="${guestManager}" class="card p-3 bg-white">
+    <div class="container" style="width:50%">
+    <div class="form-group">
     <input type="text" th:field="*{name}" class="form-control" placeholder="Your name"/>
+        <input type="text" th:field="*{partyID}" class="form-control" placeholder="Invitation Code"/>
         <div class="btn-toolbar mt-1">
         <input type="submit"  class="btn btn-primary btn-sm" value="Submit" />
         <input type="reset"  class="btn btn-primary btn-sm ml-2" value="Reset " />
         </div>
+    </div>
     </div>
 </form>
 </body>

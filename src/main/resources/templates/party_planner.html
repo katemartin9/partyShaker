@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <title>Party Planner</title>
+    <!-- jQuery -->
+    <link href="https://code.jquery.com/ui/1.12.1/themes/ui-lightness/jquery-ui.css"
+            rel="stylesheet"/>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+    <!-- Bootstrap-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet" >
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js" ></script>
+
+    <link rel="stylesheet" href="/css/bootstrap-datepicker.min.css"/>
+    <script src="/js/bootstrap-datepicker.min.js"></script>
+</head>
+<body>
+
+<form action="#" method="post" th:action="@{/party-planner}" th:object="${party}" class="card p-3 bg-white">
+    <div class="container" style="width:50%">
+    <h2>I am your Party Planner.</h2>
+    <p class="lead">Let's make your party really <mark>awesome</mark>!</p>
+    <div class="form-group">
+        <p>What is your name? <input type="text" th:field="*{hostName}" class="form-control"/></p>
+        <p>Give your party a cool name: <input type="text" th:field="*{partyName}" class="form-control"/></p>
+        <p>How many guests will be there? </p><input type="text" th:field="*{partySize}" class="form-control"/></p>
+    </div>
+                <div class="form-group">
+                    <div class='input-group date' id='dateStart'>
+                       <p>Party Start Time: <input type='text' class="form-control" th:field="*{partyStart}"/>
+                        <span class="input-group-addon">
+            <span class="glyphicon glyphicon-calendar"></span>
+            </span></p>
+                    </div>
+            </div>
+                <div class="form-group">
+                    <div class='input-group date' id='dateEnd'>
+                        <p>Party End Time: <input type='text' class="form-control" th:field="*{partyEnd}" />
+                        <span class="input-group-addon">
+            <span class="glyphicon glyphicon-calendar"></span>
+                        </span></p>
+                    </div>
+                </div>
+        <div class="form-group">
+        <p>Our selection of cocktails: <p>
+        <p>Or provide available ingredients, and I will pick the right cocktails for you.</p>
+        <div class="btn-toolbar mt-1">
+            <input type="submit"  class="btn btn-primary btn-sm" value="Submit" />
+            <input type="reset"  class="btn btn-primary btn-sm ml-2" value="Reset " />
+        </div>
+        </div>
+    </div>
+    </div>
+</form>
+<script>
+   $(function () {
+       $('#dateStart').datetimepicker();
+       $('#dateEnd').datetimepicker();
+       $("#dateStart").on("dp.change", function (e) {
+           $('#dateEnd').data("DateTimePicker").minDate(e.date);
+       });
+       $("#dateEnd").on("dp.change", function (e) {
+           $('#dateStart').data("DateTimePicker").maxDate(e.date);
+       });
+   });
+</script>
+</body>
+</html>
