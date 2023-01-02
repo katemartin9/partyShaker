@@ -31,4 +31,5 @@ public class OrderManager {
     public List<Order> getOrderQueue() {
         return repository.allPendingOrders();
     }
+
 }
