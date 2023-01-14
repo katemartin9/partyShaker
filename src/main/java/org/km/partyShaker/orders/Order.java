@@ -1,6 +1,4 @@
 package org.km.partyShaker.orders;
-
-import org.km.partyShaker.repository.Constants;
 import software.amazon.awssdk.enhanced.dynamodb.mapper.annotations.*;
 import org.km.partyShaker.stock.Cocktail;
 
@@ -45,7 +43,7 @@ public class Order {
     }
     @DynamoDbSecondaryPartitionKey(indexNames = {"statusParty-timestamp-index"})
     @DynamoDbAttribute("statusParty")
-    public String getStatusParty() {return this.orderStatus + "#" + Constants.PARTY_ID;}
+    public String getStatusParty() {return this.orderStatus + "#" + this.guestName.split("#")[1];}
     public void setStatusParty(String val){}
     @DynamoDbSecondarySortKey(indexNames = {"statusParty-timestamp-index"})
     @DynamoDbAttribute("timestamp")

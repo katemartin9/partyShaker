@@ -6,7 +6,7 @@ import software.amazon.awssdk.enhanced.dynamodb.Key;
 import software.amazon.awssdk.enhanced.dynamodb.TableSchema;
 import software.amazon.awssdk.enhanced.dynamodb.model.GetItemEnhancedRequest;
 
-public class DynamoGuestRepository {
+public class DynamoGuestRepository implements GuestRepository {
     private DynamoDbEnhancedClient client;
     private final String tableName;
 

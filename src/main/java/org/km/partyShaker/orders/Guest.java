@@ -10,7 +10,7 @@ public class Guest {
     String name;
     public Guest() {};
     public Guest(String name) {
-        this.name = name + "#" + Constants.PARTY_ID;
+        this.name = name;
     }
 
     @DynamoDbPartitionKey
@@ -18,15 +18,9 @@ public class Guest {
     public String getName() {
         return name;
     }
-    public void setName(String name)  {
-        if (name.contains("#")) {
-            this.name = name;
-        }
-        else {
-            this.name = name + "#" + Constants.PARTY_ID;
-        }
+    public void setName(String name) {
+        this.name = name;
     }
-
     public String toString() {
         return this.name;
     }

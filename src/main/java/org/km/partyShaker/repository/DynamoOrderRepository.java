@@ -1,6 +1,5 @@
 package org.km.partyShaker.repository;
 import org.km.partyShaker.orders.Order;
-import org.springframework.stereotype.Repository;
 import software.amazon.awssdk.enhanced.dynamodb.*;
 import software.amazon.awssdk.enhanced.dynamodb.model.Page;
 import software.amazon.awssdk.enhanced.dynamodb.model.PageIterable;
@@ -36,11 +35,11 @@ public class DynamoOrderRepository implements OrderRepository {
         orders.items().forEach(orderItems::add);
         return orderItems;
     }
-    public List<Order> allPendingOrders() {
+    public List<Order> allPendingOrders(String partyCode) {
         DynamoDbIndex<Order> orderDynamoDbIndex = client.table(tableName, TableSchema.fromBean(Order.class))
                 .index("statusParty-timestamp-index");
         QueryConditional queryConditional = QueryConditional
-                .keyEqualTo(Key.builder().partitionValue("0#" + Constants.PARTY_ID)
+                .keyEqualTo(Key.builder().partitionValue("0#" + partyCode)
              .build());
         Iterable<Page<Order>> orders = orderDynamoDbIndex.query(
                 QueryEnhancedRequest.builder().queryConditional(queryConditional).scanIndexForward(false).build()

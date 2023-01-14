@@ -4,10 +4,7 @@ import org.km.partyShaker.orders.OrderManager;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 public class OrderController {
@@ -18,8 +15,8 @@ public class OrderController {
     }
 
     @RequestMapping(value="/order-queue", method= RequestMethod.GET)
-    public String showOrderQueue(Model model) {
-        model.addAttribute("queue",  orderManager.getOrderQueue());
+    public String showOrderQueue(Model model, @CookieValue(name = "partyCode") String partyCode) {
+        model.addAttribute("queue",  orderManager.getOrderQueue(partyCode));
         return "order_queue";
     }
     @PutMapping(value="/order-queue")

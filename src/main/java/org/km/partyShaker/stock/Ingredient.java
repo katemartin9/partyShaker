@@ -1,5 +1,4 @@
 package org.km.partyShaker.stock;
-import org.km.partyShaker.repository.Constants;
 import software.amazon.awssdk.enhanced.dynamodb.mapper.annotations.*;
 
 import java.util.Objects;
@@ -9,6 +8,8 @@ public class Ingredient {
     String name;
     float quantity;
     boolean isAlchoholic;
+    public static final int MEASURE = 25;
+    String partyCode;
     public Ingredient() {}
     public Ingredient(String name, float quantity, boolean isAlchoholic) {
         this.name = name;
@@ -22,7 +23,7 @@ public class Ingredient {
     }
 
     public String toString() {
-        return "Ingredient[name=" + this.name + " ,quantity= " + this.quantity + " ,alcoholic= " + this.isAlchoholic + "]";
+        return "Ingredient[name=" + this.name + " ,quantity= " + this.quantity + " ,alcoholic= " + this.isAlchoholic + ", partyCode" + this.partyCode +"]";
     }
     @Override
     public boolean equals(Object obj) {
@@ -52,14 +53,19 @@ public class Ingredient {
     @DynamoDbPartitionKey
     @DynamoDbAttribute("nameParty")
     public String getNameParty() {
-        return this.name + "#" + Constants.PARTY_ID;
+        return this.name + "#" + this.partyCode;
     }
-    public void setNameParty(String name) {}
+    public void setNameParty(String val) {
+    }
 
     @DynamoDbSecondaryPartitionKey(indexNames = {"party-name-index"})
     @DynamoDbAttribute("party")
-    public String getParty() {return Constants.PARTY_ID;}
-    public void setParty(String val){}
+    public String getParty() {
+        return this.partyCode;
+    }
+    public void setParty(String partyCode){
+        this.partyCode = partyCode;
+    }
 
     public void setQuantity(float quantity) {
         this.quantity = quantity;
@@ -71,6 +77,10 @@ public class Ingredient {
 
     public void setAlchoholic(boolean alchoholic) {
         isAlchoholic = alchoholic;
+    }
+
+    public void withPartyCode(String partyCode) {
+        this.partyCode = partyCode;
     }
 }
 

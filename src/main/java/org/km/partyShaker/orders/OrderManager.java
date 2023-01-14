@@ -28,8 +28,8 @@ public class OrderManager {
         } return false;
     }
 
-    public List<Order> getOrderQueue() {
-        return repository.allPendingOrders();
+    public List<Order> getOrderQueue(String partyCode) {
+        return repository.allPendingOrders(partyCode);
     }
 
 }

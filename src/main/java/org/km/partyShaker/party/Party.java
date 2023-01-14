@@ -1,7 +1,13 @@
 package org.km.partyShaker.party;
+import org.km.partyShaker.repository.Utilities;
 import org.km.partyShaker.stock.Ingredient;
+import software.amazon.awssdk.enhanced.dynamodb.mapper.annotations.DynamoDbAttribute;
+import software.amazon.awssdk.enhanced.dynamodb.mapper.annotations.DynamoDbBean;
+import software.amazon.awssdk.enhanced.dynamodb.mapper.annotations.DynamoDbPartitionKey;
+
 import java.util.List;
 
+@DynamoDbBean
 public class Party {
     int partySize;
     String hostName;
@@ -10,8 +16,17 @@ public class Party {
     String partyEnd;
     List<String> cocktailOptions;
     List<Ingredient> ingredients;
+    String partyCode;
 
     public Party() {}
+    public String getPartyCode() {
+        return partyCode;
+    }
+    @DynamoDbPartitionKey
+    @DynamoDbAttribute("partyCode")
+    public void setPartyCode(String partyCode) {
+        this.partyCode = partyCode;
+    }
 
     public int getPartySize() {
         return partySize;
@@ -29,14 +44,11 @@ public class Party {
         this.hostName = hostName;
     }
 
-    public String getPartyName() {
-        return partyName;
-    }
+    public String getPartyName() {return partyName;}
 
     public void setPartyName(String partyName) {
         this.partyName = partyName;
     }
-
     public String getPartyStart() {
         return partyStart;
     }
@@ -68,7 +80,6 @@ public class Party {
     public void setIngredients(List<Ingredient> ingredients) {
         this.ingredients = ingredients;
     }
-
     public String toString() {
         return "Party[size=" + this.partySize + " host= " + this.hostName + " partyName=" + this.partyName
                 + " start=" + this.partyStart + " end=" + this.partyEnd + "]";
@@ -81,6 +92,7 @@ public class Party {
         String partyEnd;
         List<String> cocktailOptions;
         List<Ingredient> ingredients;
+        String partyCode;
 
         public PartyBuilder() {
             this.cocktailOptions = null;
@@ -114,6 +126,10 @@ public class Party {
             this.cocktailOptions = cocktails;
             return this;
         }
+        public PartyBuilder withPartyCode(String partyCode) {
+            this.partyCode = partyCode;
+            return this;
+        }
 
         public Party build() {
             Party newParty = new Party();
@@ -124,6 +140,7 @@ public class Party {
             newParty.partyEnd = this.partyEnd;
             newParty.ingredients = this.ingredients;
             newParty.cocktailOptions = this.cocktailOptions;
+            newParty.partyCode = this.partyCode;
             return newParty;
         }
 

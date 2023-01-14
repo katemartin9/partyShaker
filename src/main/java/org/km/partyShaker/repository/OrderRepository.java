@@ -12,6 +12,6 @@ public interface OrderRepository {
 
     public List<Order> allOrdersByGuestName(String guestName);
 
-    public List<Order> allPendingOrders();
+    public List<Order> allPendingOrders(String partyCode);
 
 }
