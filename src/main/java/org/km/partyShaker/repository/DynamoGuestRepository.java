@@ -1,10 +1,14 @@
 package org.km.partyShaker.repository;
 import org.km.partyShaker.orders.Guest;
-import software.amazon.awssdk.enhanced.dynamodb.DynamoDbEnhancedClient;
-import software.amazon.awssdk.enhanced.dynamodb.DynamoDbTable;
-import software.amazon.awssdk.enhanced.dynamodb.Key;
-import software.amazon.awssdk.enhanced.dynamodb.TableSchema;
+import software.amazon.awssdk.enhanced.dynamodb.*;
 import software.amazon.awssdk.enhanced.dynamodb.model.GetItemEnhancedRequest;
+import software.amazon.awssdk.enhanced.dynamodb.model.Page;
+import software.amazon.awssdk.enhanced.dynamodb.model.QueryConditional;
+import software.amazon.awssdk.enhanced.dynamodb.model.QueryEnhancedRequest;
+
+import java.util.ArrayList;
+import java.util.List;
+
 
 public class DynamoGuestRepository implements GuestRepository {
     private DynamoDbEnhancedClient client;
@@ -24,5 +28,18 @@ public class DynamoGuestRepository implements GuestRepository {
         Key key = Key.builder().partitionValue(guest.getName()).build();
         Guest loadedGuest = guestDynamoDbTable.getItem((GetItemEnhancedRequest.Builder requestBuilder) -> requestBuilder.key(key));
         return loadedGuest != null;
+    }
+    public int getRegisteredGuests(String partyCode) {
+        DynamoDbIndex<Guest> orderDynamoDbIndex = client.table(tableName, TableSchema.fromBean(Guest.class))
+                .index("party-guestName-index");
+        QueryConditional queryConditional = QueryConditional
+                .keyEqualTo(Key.builder().partitionValue(partyCode)
+                        .build());
+        Iterable<Page<Guest>> guests = orderDynamoDbIndex.query(
+                QueryEnhancedRequest.builder().queryConditional(queryConditional).scanIndexForward(false).build()
+        );
+        List<Guest> allGuests = new ArrayList<>();
+        guests.forEach(it -> allGuests.addAll(it.items()));
+        return allGuests.size();
     }
 }

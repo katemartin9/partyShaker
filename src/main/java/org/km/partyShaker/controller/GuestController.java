@@ -36,12 +36,14 @@ public class GuestController {
         Party party = repositoryParty.load(partyCode);
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
         String timestampNow = new SimpleDateFormat("yyyy-MM-dd HH:mm").format(Calendar.getInstance().getTime());
+        DynamoGuestRepository repositoryGuest = new DynamoGuestRepository(client);
         if (party != null &&
                 sdf.parse(party.getPartyStart()).before(sdf.parse(timestampNow)) &&
-                sdf.parse(party.getPartyEnd()).after(sdf.parse(timestampNow))
+                sdf.parse(party.getPartyEnd()).after(sdf.parse(timestampNow)) &&
+                repositoryGuest.getRegisteredGuests(partyCode) < party.getPartySize()
         ) {
             Guest guest = guestManager.createGuest();
-            DynamoGuestRepository repositoryGuest = new DynamoGuestRepository(client);
+
             if (!repositoryGuest.load(guest)) repositoryGuest.save(guest);
             model.addAttribute("guest", guest);
             Cookie cookie = new Cookie("guest", guest.getName());

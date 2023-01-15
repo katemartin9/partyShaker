@@ -42,7 +42,7 @@ public class DynamoOrderRepository implements OrderRepository {
                 .keyEqualTo(Key.builder().partitionValue("0#" + partyCode)
              .build());
         Iterable<Page<Order>> orders = orderDynamoDbIndex.query(
-                QueryEnhancedRequest.builder().queryConditional(queryConditional).scanIndexForward(false).build()
+                QueryEnhancedRequest.builder().queryConditional(queryConditional).scanIndexForward(true).build()
         );
         List<Order> pendingOrders = new ArrayList<>();
         orders.forEach(it -> pendingOrders.addAll(it.items()));
