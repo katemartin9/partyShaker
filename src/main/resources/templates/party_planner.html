@@ -15,6 +15,8 @@
 
     <link rel="stylesheet" href="/css/bootstrap-datepicker.min.css"/>
     <script src="/js/bootstrap-datepicker.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 </head>
 <body>
 
@@ -45,7 +47,10 @@
                 </div>
         <div class="form-group">
         <p>Our selection of cocktails: <p>
-        <p>Or provide available ingredients, and I will pick the right cocktails for you.</p>
+            <select th:object="${cocktails}" class="js-example-basic-multiple" style="width: 75%" name="cocktailOptions" multiple="multiple">
+                <option th:each="cocktail : ${cocktails}" th:value="${cocktail.name}" th:text="${cocktail.name}"></option>
+            </select>
+        <p>Party Manager will calculate the amount of stock needed.</p>
         <div class="btn-toolbar mt-1">
             <input type="submit"  class="btn btn-primary btn-sm" value="Submit" />
             <input type="reset"  class="btn btn-primary btn-sm ml-2" value="Reset " />
@@ -65,6 +70,10 @@
            $('#dateStart').data("DateTimePicker").maxDate(e.date);
        });
    });
+
+   $(document).ready(function() {
+    $('.js-example-basic-multiple').select2();
+});
 </script>
 </body>
 </html>
