@@ -1,9 +1,12 @@
 package org.km.partyShaker.party;
 
 import org.km.partyShaker.orders.Guest;
+import org.km.partyShaker.repository.Constants;
+import org.km.partyShaker.repository.FileCocktailRepository;
 import org.km.partyShaker.repository.Utilities;
 import org.km.partyShaker.stock.Ingredient;
 
+import java.util.HashSet;
 import java.util.List;
 
 public class PartyPlanner {
@@ -23,11 +26,14 @@ public class PartyPlanner {
                 .withPartyName(this.partyName)
                 .withPartyStart(this.partyStart)
                 .withPartyEnd(this.partyEnd)
-                .withIngredients(this.ingredients)
                 .withCocktailOptions(this.cocktailOptions)
+                .withIngredients(generateIngredients())
                 .withPartyCode(Utilities.generateRandomString(5)).build();
     }
-
+    public List<Ingredient> generateIngredients() {
+        HashSet<String > cocktailSet = new HashSet<>(this.cocktailOptions);
+        return new FileCocktailRepository(Constants.COCKTAILS_FILE).getAllIngredientsByCocktailNames(cocktailSet);
+    }
     public int getPartySize() {
         return partySize;
     }

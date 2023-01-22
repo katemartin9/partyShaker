@@ -7,13 +7,12 @@ import org.km.partyShaker.repository.FileCocktailRepository;
 import org.km.partyShaker.stock.Cocktail;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import software.amazon.awssdk.enhanced.dynamodb.DynamoDbEnhancedClient;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
-
-import java.util.List;
 
 import static org.km.partyShaker.repository.Utilities.createDynamoDBClient;
 
@@ -32,7 +31,6 @@ public class PartyPlannerController {
         DynamoDbEnhancedClient client = createDynamoDBClient();
         DynamoPartyRepository repositoryParty = new DynamoPartyRepository(client);
         Party party = partyPlanner.createParty();
-        System.out.println(party.getCocktailOptions());
         repositoryParty.save(party);
         Cookie cookie = new Cookie("partyCode", party.getPartyCode());
         response.addCookie(cookie);
@@ -40,7 +38,11 @@ public class PartyPlannerController {
     }
 
     @GetMapping(value = "/party-page")
-    public String showParty(Model model) {
+    public String showParty(Model model, @CookieValue(name = "partyCode") String partyCode) {
+        DynamoDbEnhancedClient client = createDynamoDBClient();
+        DynamoPartyRepository repositoryParty = new DynamoPartyRepository(client);
+        Party party = repositoryParty.load(partyCode);
+        model.addAttribute("party", party);
         return "party_profile";
     }
 

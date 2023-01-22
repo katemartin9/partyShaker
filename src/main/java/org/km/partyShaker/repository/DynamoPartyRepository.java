@@ -24,9 +24,9 @@ public class DynamoPartyRepository implements PartyRepository {
     }
 
     @Override
-    public Party load(String partyName) {
+    public Party load(String partyCode) {
         DynamoDbTable<Party> partyDynamoDbTable = client.table(tableName, TableSchema.fromBean(Party.class));
-        Key key = Key.builder().partitionValue(partyName).build();
+        Key key = Key.builder().partitionValue(partyCode).build();
         Party loadedParty = partyDynamoDbTable.getItem((GetItemEnhancedRequest.Builder requestBuilder) -> requestBuilder.key(key));
         return loadedParty;
     }
