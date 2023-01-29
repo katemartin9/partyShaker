@@ -5,7 +5,6 @@ import software.amazon.awssdk.enhanced.dynamodb.model.GetItemEnhancedRequest;
 import software.amazon.awssdk.enhanced.dynamodb.model.Page;
 import software.amazon.awssdk.enhanced.dynamodb.model.QueryConditional;
 import software.amazon.awssdk.enhanced.dynamodb.model.QueryEnhancedRequest;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,6 +27,11 @@ public class DynamoGuestRepository implements GuestRepository {
         Key key = Key.builder().partitionValue(guest.getName()).build();
         Guest loadedGuest = guestDynamoDbTable.getItem((GetItemEnhancedRequest.Builder requestBuilder) -> requestBuilder.key(key));
         return loadedGuest != null;
+    }
+    public Guest loadGuest(Guest guest) {
+        DynamoDbTable<Guest> guestDynamoDbTable = client.table(tableName, TableSchema.fromBean(Guest.class));
+        Key key = Key.builder().partitionValue(guest.getName()).build();
+        return guestDynamoDbTable.getItem((GetItemEnhancedRequest.Builder requestBuilder) -> requestBuilder.key(key));
     }
     public int getRegisteredGuests(String partyCode) {
         DynamoDbIndex<Guest> orderDynamoDbIndex = client.table(tableName, TableSchema.fromBean(Guest.class))

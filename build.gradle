@@ -10,7 +10,13 @@ sourceCompatibility = '1.8'
 
 repositories {
 	mavenCentral()
+	maven {
+		name "DynamoDB Local Release Repository - US West Region"
+		url "https://s3.us-west-2.amazonaws.com/dynamodb-local/release"
+	}
 }
+
+
 
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-web'
@@ -22,9 +28,9 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
 	implementation platform('software.amazon.awssdk:bom:2.15.0')
 	implementation 'software.amazon.awssdk:dynamodb-enhanced'
+	implementation 'com.google.guava:guava:26.0-jre'
 	implementation group: 'com.amazonaws', name: 'aws-java-sdk-dynamodb', version: '1.9.0'
-
-
+	testImplementation group: 'com.amazonaws', name: 'DynamoDBLocal', version: '1.11.119'
 }
 
 tasks.named('test') {
