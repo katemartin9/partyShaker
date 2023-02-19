@@ -1,7 +1,6 @@
 package org.km.partyShaker.orders;
 import software.amazon.awssdk.enhanced.dynamodb.mapper.annotations.*;
 import org.km.partyShaker.stock.Cocktail;
-
 import java.text.SimpleDateFormat;
 
 @DynamoDbBean
@@ -17,13 +16,13 @@ public class Order {
         this.guestName = guest;
         this.orderId = orderId;
         this.cocktail = cocktail.getName();
-        this.timestamp = new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss").format(new java.util.Date());
+        this.timestamp = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(new java.util.Date());
     }
     public Order(String guest, int orderId, String cocktail) {
         this.guestName = guest;
         this.orderId = orderId;
         this.cocktail = cocktail;
-        this.timestamp = new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss").format(new java.util.Date());
+        this.timestamp = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(new java.util.Date());
     }
     @DynamoDbPartitionKey
     @DynamoDbAttribute("guestName")

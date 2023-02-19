@@ -31,6 +31,7 @@ public class PartyPlannerController {
         DynamoDbEnhancedClient client = createDynamoDBClient();
         DynamoPartyRepository repositoryParty = new DynamoPartyRepository(client);
         Party party = partyPlanner.createParty();
+        //TODO: check this recognises timezone
         repositoryParty.save(party);
         Cookie cookie = new Cookie("partyCode", party.getPartyCode());
         response.addCookie(cookie);
