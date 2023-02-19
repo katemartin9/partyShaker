@@ -82,5 +82,9 @@ public class Ingredient {
     public void withPartyCode(String partyCode) {
         this.partyCode = partyCode;
     }
+
+    public Ingredient clone() {
+        return new Ingredient(this.name, this.quantity, this.isAlchoholic);
+    }
 }
 

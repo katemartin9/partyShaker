@@ -21,8 +21,7 @@ public class OrderController {
     }
     @PutMapping(value="/order-queue")
     public ResponseEntity<Order> removeOrder(@RequestBody Order completedOrder) {
-        //TODO: add update instead of override (so just update status here)
-        orderManager.removeFromQueue(completedOrder);
+        orderManager.updateStatus(completedOrder);
         return ResponseEntity.ok(completedOrder);
     }
 }

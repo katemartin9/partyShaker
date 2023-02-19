@@ -5,6 +5,7 @@ import software.amazon.awssdk.enhanced.dynamodb.mapper.annotations.DynamoDbAttri
 import software.amazon.awssdk.enhanced.dynamodb.mapper.annotations.DynamoDbBean;
 import software.amazon.awssdk.enhanced.dynamodb.mapper.annotations.DynamoDbPartitionKey;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @DynamoDbBean
@@ -75,6 +76,14 @@ public class Party {
 
     public List<Ingredient> getIngredients() {
         return ingredients;
+    }
+
+    public List<Ingredient> cloneIngredients() {
+        List<Ingredient> result = new ArrayList<>();
+        for (Ingredient ingredient: this.ingredients) {
+            result.add(ingredient.clone());
+        }
+        return result;
     }
 
     public void setIngredients(List<Ingredient> ingredients) {

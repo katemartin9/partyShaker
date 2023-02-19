@@ -57,7 +57,7 @@ background: linear-gradient(to right bottom, rgba(224, 255, 204, 1), rgba(255, 2
                         </div>
                     </div>
                     <div class="card mb-3" style="border-radius: .5rem;" >
-                        Stock required for the party:
+                        Stock required for the party if one guest has one of each:
                         <p th:each="ingredient : ${party.ingredients}" th:text="${ingredient.name + ' : ' + ingredient.quantity*25*party.partySize}"></p>
                     </div>
                 </div>

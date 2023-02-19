@@ -33,8 +33,7 @@ public class MenuController {
                 return "menu";
             }
             if (stockManager.removeStock(cocktail.get(), partyCode)) {
-                Order order = new Order(guestName, 1, cocktail.get());
-                orderManager.addToQueue(order);
+                orderManager.addToQueue(guestName, cocktail.get());
                 return "redirect:/ordered";
             }
         }
