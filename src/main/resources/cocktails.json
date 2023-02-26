@@ -1,0 +1,131 @@
+[
+  {
+    "name": "Florida Skies",
+    "description": "Refreshing and very slightly sweet",
+    "ingredients": [
+      {
+        "name": "rum",
+        "quantity": 1.0,
+        "isAlchoholic": true
+      },
+      {
+        "name": "lime juice",
+        "quantity": 0.25,
+        "isAlchoholic": false
+      },
+      {
+        "name": "pineapple juice",
+        "quantity": 0.5,
+        "isAlchoholic": false
+      },
+      {
+        "name": "soda water",
+        "quantity": 5.0,
+        "isAlchoholic": false
+      }
+    ]
+  },
+  {
+    "name": "Pina Colada",
+    "description": "Sweet and delicious",
+    "ingredients": [
+      {
+        "name": "rum",
+        "quantity": 1.0,
+        "isAlchoholic": true
+      },
+      {
+        "name": "coconut milk",
+        "quantity": 2.0,
+        "isAlchoholic": false
+      },
+      {
+        "name": "pineapple juice",
+        "quantity": 2.0,
+        "isAlchoholic": false
+      }
+    ]
+  },
+  {
+    "name": "Havana Beach",
+    "description": "Very Beachy. Top up with ginger ale and 1 teaspoon of sugar",
+    "ingredients": [
+      {
+        "name": "rum",
+        "quantity": 1.0,
+        "isAlchoholic": true
+      },
+      {
+        "name": "lime juice",
+        "quantity": 0.5,
+        "isAlchoholic": false
+      },
+      {
+        "name": "pineapple juice",
+        "quantity": 2.0,
+        "isAlchoholic": false
+      }
+    ]
+  },
+  {
+    "name": "Pussyfoot",
+    "description": "Potent and cloudy",
+    "ingredients": [
+      {
+        "name": "rum",
+        "quantity": 1.5,
+        "isAlchoholic": true
+      },
+      {
+        "name": "double cream",
+        "quantity": 1.0,
+        "isAlchoholic": false
+      },
+      {
+        "name": "pineapple juice",
+        "quantity": 1.0,
+        "isAlchoholic": false
+      },
+      {
+        "name": "lime juice",
+        "quantity": 1.0,
+        "isAlchoholic": false
+      },
+      {
+        "name": "cherry juice",
+        "quantity": 1.0,
+        "isAlchoholic": false
+      }
+    ]
+  },
+  {
+  "name": "Sex on the Beach",
+  "description": "Sweet and smooth.",
+  "ingredients": [
+    {
+      "name": "vodka",
+      "quantity": 0.5,
+      "isAlchoholic": true
+    },
+    {
+      "name": "peach schnapps",
+      "quantity": 0.5,
+      "isAlchoholic": true
+    },
+    {
+      "name": "pineapple juice",
+      "quantity": 1.0,
+      "isAlchoholic": false
+    },
+    {
+      "name": "orange juice",
+      "quantity": 1.0,
+      "isAlchoholic": false
+    },
+    {
+      "name": "cranberry juice",
+      "quantity": 1.0,
+      "isAlchoholic": false
+    }
+  ]}
+]
