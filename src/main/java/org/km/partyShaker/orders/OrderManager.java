@@ -30,7 +30,10 @@ public class OrderManager {
     }
     public int generateNextOrderId(String guestName) {
         Order latestOrder = repository.latestOrderByGuestName(guestName);
-        return latestOrder.getOrderId() + 1;
+        if (latestOrder != null) {
+            return latestOrder.getOrderId() + 1;
+        }
+        return 1;
     }
 
     public List<Order> getOrderQueue(String partyCode) {

@@ -4,6 +4,8 @@ import com.google.gson.stream.JsonReader;
 import org.km.partyShaker.stock.Cocktail;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
+import software.amazon.awssdk.auth.credentials.AwsCredentialsProvider;
+import software.amazon.awssdk.auth.credentials.DefaultCredentialsProvider;
 import software.amazon.awssdk.auth.credentials.ProfileCredentialsProvider;
 import software.amazon.awssdk.enhanced.dynamodb.DynamoDbEnhancedClient;
 import software.amazon.awssdk.regions.Region;
@@ -27,7 +29,14 @@ public class Utilities {
     }
 
     public static DynamoDbEnhancedClient createDynamoDBClient() {
-        ProfileCredentialsProvider credentialsProvider = ProfileCredentialsProvider.create();
+        String currentOS = System.getProperty("os.name");
+        AwsCredentialsProvider credentialsProvider;
+        if (currentOS.contains("Windows")|(currentOS.contains("Mac"))) {
+            credentialsProvider = ProfileCredentialsProvider.create();}
+        else {
+            credentialsProvider = DefaultCredentialsProvider.create();
+        }
+
         Region region = Region.US_EAST_1;
         DynamoDbClient ddb = DynamoDbClient.builder()
                 .credentialsProvider(credentialsProvider)
