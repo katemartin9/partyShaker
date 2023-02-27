@@ -26,7 +26,7 @@ public class PartyPlannerController {
     @GetMapping(value="/party-planner")
     public String planParty(Model model) {
         model.addAttribute("party", new Party());
-        model.addAttribute("cocktails", new FileCocktailRepository(Constants.COCKTAILS_FILE).load());
+        model.addAttribute("cocktails", new FileCocktailRepository().load());
         return "party_planner";
     }
 

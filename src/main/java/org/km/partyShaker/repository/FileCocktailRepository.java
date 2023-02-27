@@ -9,8 +9,8 @@ import static org.km.partyShaker.repository.Utilities.loadManyFromJSON;
 public class FileCocktailRepository implements CocktailRepository {
     private final List<Cocktail> cocktails;
     private Set<Ingredient> allIngredients;
-    public FileCocktailRepository(String fileName) {
-        this.cocktails = loadManyFromJSON(fileName);
+    public FileCocktailRepository() {
+        this.cocktails = loadManyFromJSON();
         this.allIngredients = null;
     }
     public List<Cocktail> load() {

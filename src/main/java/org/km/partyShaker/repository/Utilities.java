@@ -1,29 +1,24 @@
 package org.km.partyShaker.repository;
-
 import com.google.gson.Gson;
 import com.google.gson.stream.JsonReader;
-import org.km.partyShaker.PartyShakerApplication;
 import org.km.partyShaker.stock.Cocktail;
-import org.km.partyShaker.stock.Ingredient;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.Resource;
 import software.amazon.awssdk.auth.credentials.ProfileCredentialsProvider;
 import software.amazon.awssdk.enhanced.dynamodb.DynamoDbEnhancedClient;
 import software.amazon.awssdk.regions.Region;
 import software.amazon.awssdk.services.dynamodb.DynamoDbClient;
-
-import java.io.File;
-import java.io.FileReader;
-import java.net.URL;
-import java.nio.file.Paths;
+import java.io.*;
 import java.util.Arrays;
 import java.util.List;
 
 public class Utilities {
-    public static List<Cocktail> loadManyFromJSON(String filename) {
+
+    public static List<Cocktail> loadManyFromJSON() {
         try {
-            URL resource = PartyShakerApplication.class.getClassLoader().getResource(filename);
-            File file = Paths.get(resource.toURI()).toFile();
+            Resource resource = new ClassPathResource("cocktails.json");
             Gson gson = new Gson();
-            JsonReader reader = new JsonReader(new FileReader(file));
+            JsonReader reader = new JsonReader(new InputStreamReader(resource.getInputStream()));
             return Arrays.asList(gson.fromJson(reader, Cocktail[].class));
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -45,18 +40,6 @@ public class Utilities {
         return enhancedClient;
     }
 
-    public static List<Ingredient> loadManyFromJSONStock(String filename) {
-        try {
-            URL resource = PartyShakerApplication.class.getClassLoader().getResource(filename);
-            File file = Paths.get(resource.toURI()).toFile();
-            Gson gson = new Gson();
-            JsonReader reader = new JsonReader(new FileReader(file));
-            return Arrays.asList(gson.fromJson(reader, Ingredient[].class));
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-            return null;
-        }
-    }
     public static String generateRandomString(int n) {
         String AlphaNumericString = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
                 + "0123456789" + "abcdefghijklmnopqrstuvxyz";

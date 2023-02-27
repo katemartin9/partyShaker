@@ -60,7 +60,7 @@ public class StockManager {
         return true;
     }
     public List<Cocktail> listAvailableCocktails() {
-        FileCocktailRepository cocktail_repo = new FileCocktailRepository(Constants.COCKTAILS_FILE);
+        FileCocktailRepository cocktail_repo = new FileCocktailRepository();
         List<Cocktail> cocktails = cocktail_repo.load();
         List<Cocktail> availableCocktails = new ArrayList<>();
         for (Cocktail cocktail : cocktails) {

@@ -1,5 +1,4 @@
 package org.km.partyShaker.party;
-import org.km.partyShaker.repository.Constants;
 import org.km.partyShaker.repository.FileCocktailRepository;
 import org.km.partyShaker.repository.Utilities;
 import org.km.partyShaker.stock.Ingredient;
@@ -29,7 +28,7 @@ public class PartyPlanner {
     }
     public List<Ingredient> generateIngredients() {
         HashSet<String > cocktailSet = new HashSet<>(this.cocktailOptions);
-        return new FileCocktailRepository(Constants.COCKTAILS_FILE).getAllIngredientsByCocktailNames(cocktailSet);
+        return new FileCocktailRepository().getAllIngredientsByCocktailNames(cocktailSet);
     }
     public int getPartySize() {
         return partySize;
